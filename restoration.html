@@ -1,46 +1,36 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Реставрация мебели</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>body { font-family: 'Inter', sans-serif; }</style>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const supabaseUrl = 'https://oppgphqoyajcscyjnuvc.supabase.co';
+        const supabaseKey = 'sb_publishable_5BioP4yWmd2btjG6SXbU_w_trFj4wdF';
+        const supabase = supabaseJs.createClient(supabaseUrl, supabaseKey);
+    </script>
 </head>
-<body class="p-6 md:p-12">
-  <div class="max-w-7xl mx-auto">
-    <a href="services.html" class="text-sm font-bold text-gray-400 hover:text-black">← НАЗАД К УСЛУГАМ</a>
-    <h1 class="text-4xl font-bold mt-8 mb-12 italic">Мастерская <span class="text-[#b68b5c]">реставрации</span></h1>
-
-    <div class="space-y-12">
-      <!-- Пример работы -->
-      <div class="bg-white rounded-3xl border p-6 flex flex-col md:flex-row gap-8 items-center">
-        <div class="w-full md:w-1/2 grid grid-cols-2 gap-2 h-64">
-          <div class="bg-gray-200 rounded-xl flex items-center justify-center text-[10px] font-bold text-gray-400">ДО</div>
-          <div class="bg-gray-300 rounded-xl flex items-center justify-center text-[10px] font-bold text-gray-700">ПОСЛЕ</div>
+<body class="p-8 bg-stone-50 font-sans">
+    <div class="max-w-3xl mx-auto">
+        <a href="services.html" class="text-[10px] font-black text-gray-400 tracking-widest">← К УСЛУГАМ</a>
+        <h1 class="text-3xl font-bold mt-10 mb-10 italic">Реставрация и <span class="text-[#b68b5c]">ремонт</span></h1>
+        
+        <div class="bg-white rounded-3xl p-8 shadow-sm border border-stone-200">
+            <div class="grid grid-cols-2 gap-4 h-48 mb-6">
+                <div class="bg-stone-100 rounded-xl flex items-center justify-center italic text-stone-400 text-xs">ДО</div>
+                <div class="bg-stone-200 rounded-xl flex items-center justify-center italic text-stone-600 text-xs font-bold">ПОСЛЕ</div>
+            </div>
+            <h2 class="text-xl font-bold mb-4">Полное восстановление кресла</h2>
+            <p class="text-gray-400 text-sm mb-6 italic italic leading-relaxed">Включает замену пружинного блока, перетяжку и реставрацию деревянных элементов.</p>
+            <button onclick="order('Реставрация кресла')" class="w-full bg-[#b68b5c] text-white py-4 rounded-full font-bold shadow-md">ВЫЗВАТЬ МАСТЕРА НА ОЦЕНКУ</button>
         </div>
-        <div class="w-full md:w-1/2">
-          <h3 class="text-2xl font-bold mb-2 italic">Реставрация кресла</h3>
-          <p class="text-gray-400 text-sm mb-6 italic">Замена обивки, ремонт каркаса и лакировка ножек.</p>
-          <button onclick="orderRestoration('Реставрация кресла')" class="bg-black text-white px-8 py-3 rounded-full font-bold hover:scale-105 transition">Заказать такую работу</button>
-        </div>
-      </div>
     </div>
-  </div>
-
-  <script>
-    function orderRestoration(name) {
-      const order = {
-        id: Math.floor(Math.random() * 9000) + 1000,
-        item: name,
-        details: "Требуется оценка стоимости",
-        status: "Новый",
-        date: new Date().toLocaleDateString()
-      };
-      localStorage.setItem('activeOrder', JSON.stringify(order));
-      alert('Заявка принята! Мастер свяжется с вами.');
-      window.location.href = 'index.html';
-    }
-  </script>
+    <script>
+        async function order(name) {
+            const num = Math.floor(Math.random() * 9000) + 1000;
+            const { error } = await supabase.from('orders').insert([{ order_num: num, item_name: name, details: "Запрос на реставрацию", status: 'Новый' }]);
+            if (!error) { alert('Мастер перезвонит вам!'); window.location.href='index.html'; }
+        }
+    </script>
 </body>
 </html>
