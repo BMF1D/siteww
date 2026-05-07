@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог: Мягкая мебель</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #fff; }
+    .wood-text { color: #b68b5c; }
+  </style>
+</head>
+<body class="p-6 md:p-12">
+  <div class="max-w-7xl mx-auto">
+    <a href="services.html" class="text-sm font-bold text-gray-400 hover:text-black transition">← НАЗАД К УСЛУГАМ</a>
+    
+    <h1 class="text-4xl font-bold mt-8 mb-2 italic">Мягкая <span class="wood-text">мебель</span></h1>
+    <p class="text-gray-400 mb-12 italic text-sm">Выберите модель для оформления заказа</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <!-- Карточка товара -->
+      <div class="bg-stone-50 rounded-3xl p-6 border border-stone-100">
+        <div class="h-64 bg-gray-200 rounded-2xl mb-6"></div>
+        <h3 class="text-2xl font-bold mb-4">Диван "Premium Velvet"</h3>
+        
+        <div class="space-y-4 mb-8">
+          <div>
+            <label class="text-[10px] font-black uppercase text-stone-400">Тип ткани</label>
+            <select id="fabric-type" class="w-full mt-1 bg-white border border-stone-200 p-3 rounded-xl text-sm">
+              <option>Итальянский велюр</option>
+              <option>Эко-кожа</option>
+              <option>Рогожка</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center border-t border-stone-200 pt-6">
+          <span class="text-xl font-bold">--- BYN</span>
+          <button onclick="placeOrder('Диван Premium Velvet', 'fabric-type')" class="bg-black text-white px-8 py-3 rounded-full font-bold hover:scale-105 transition">Заказать</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function placeOrder(name, selectId) {
+      const detail = document.getElementById(selectId).value;
+      const order = {
+        id: Math.floor(Math.random() * 9000) + 1000,
+        item: name,
+        details: "Ткань: " + detail,
+        status: "Новый",
+        date: new Date().toLocaleDateString()
+      };
+      localStorage.setItem('activeOrder', JSON.stringify(order));
+      alert('Заказ оформлен! Проверьте статус на главной странице.');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
